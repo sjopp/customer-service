@@ -1,0 +1,10 @@
+{
+  "name": "Samuel Jopp",
+  "dateOfBirth": "1995/09/15",
+  "gender": "male",
+  "bankAccount": {
+    "bankName": "Santander",
+    "sortCode": "090128",
+    "accountNumber": 67827346
+  }
+}

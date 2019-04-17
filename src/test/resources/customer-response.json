@@ -1,0 +1,10 @@
+{
+  "info": {
+    "status": 200,
+    "code": "",
+    "message": "Successful transaction"
+  },
+  "data": {
+    "accountNumber": 345678
+  }
+}
