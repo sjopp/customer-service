@@ -1,30 +1,31 @@
 package com.jopp.customerservice.functional;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static com.jayway.restassured.RestAssured.get;
 
 abstract class FunctionalTest {
 
     WireMockServer wireMockServer;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         wireMockServer = new WireMockServer(8090);
         wireMockServer.start();
         setupStub();
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         wireMockServer.stop();
     }
 
     public void setupStub() {
-
+        wireMockServer.stubFor(get(urlEqualTo("/customers"))
+                .willReturn(aResponse().withHeader("Content-Type", "text/plain")
+                        .withStatus(200)
+                        .withBodyFile("json/customer-response.json")));
     }
 }

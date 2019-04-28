@@ -1,0 +1,14 @@
+{
+  "info": {
+    "status": 200,
+    "code": "",
+    "message": "Successful retrieval"
+  },
+  "data": {
+    "customers": {
+      "name": "Sam Jopp",
+      "age": 23,
+      "membership": "NONE"
+    }
+  }
+}
