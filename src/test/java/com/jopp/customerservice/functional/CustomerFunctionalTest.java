@@ -10,6 +10,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 
@@ -28,18 +29,17 @@ public class CustomerFunctionalTest {
 
     @After
     public void tearDown(){
-
     }
 
     @Test
-    public void testStatusCodeOfController() {
+    public void testResponseOfController() {
         given().
            port(port).
         when().
-           get("/customers").
+           get("/customer").
         then().
-           statusCode(200);
-//        and().
-//           body("customers.name", equalTo("Sam Jopp"));
+           statusCode(200).
+        and().
+           body("name", equalTo("Sam Jopp"));
     }
 }
