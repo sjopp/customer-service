@@ -15,13 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
     @GetMapping("/customer")
-    public ResponseEntity<JSONObject> getCustomers() {
+    public ResponseEntity<Customer> getCustomers() {
 
         log.info("Entering the getCustomer controller");
         Customer customer = new Customer("Sam Jopp", 23);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", customer.getName());
-        return new ResponseEntity(jsonObject, HttpStatus.OK);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
 //    @PostMapping("/add")
