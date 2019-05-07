@@ -19,12 +19,7 @@ public class CustomerController {
 
         log.info("Entering the getCustomer controller");
         Customer customer = new Customer("Sam Jopp", 23);
+        log.info("Leaving the getCustomer controller");
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
-
-//    @PostMapping("/add")
-//    public ResponseEntity addCustomer(
-//            @RequestBody Customer customer) {
-//
-//    }
 }
