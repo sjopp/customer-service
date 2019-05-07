@@ -1,4 +1,4 @@
-package com.jopp.customerservice;
+package com.jopp.customerservice.controller;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.jopp.customerservice.model.Customer;
