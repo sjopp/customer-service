@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CustomerRepo extends CrudRepository<Customer, Long> {
 
-    public List<Customer> findByFullName(String name);
+    public List<Customer> findByFullNameLike(String name);
 
     public List<Customer> findByDateOfBirthGreaterThan(Date date);
 }

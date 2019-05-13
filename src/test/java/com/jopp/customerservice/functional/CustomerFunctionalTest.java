@@ -36,10 +36,10 @@ public class CustomerFunctionalTest {
         given().
            port(port).
         when().
-           get("/customer").
+           get("/customers").
         then().
            statusCode(200).
         and().
-           body("name", equalTo("Sam Jopp"));
+           body("customers[0].fullName", equalTo("Sam Jopp"));
     }
 }

@@ -1,25 +1,42 @@
 package com.jopp.customerservice.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.jopp.customerservice.model.Customer;
+import com.jopp.customerservice.entity.Customer;
+import com.jopp.customerservice.io.CustomerResponseWrapper;
+import com.jopp.customerservice.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 
 @Slf4j
 @RestController
 public class CustomerController {
 
-    @GetMapping("/customer")
-    public ResponseEntity<Customer> getCustomers() {
+    private final CustomerService customerService;
+
+    @Autowired
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+    @GetMapping("/customers")
+    public ResponseEntity<CustomerResponseWrapper> getCustomers() {
 
         log.info("Entering the getCustomer controller");
-        Customer customer = new Customer("Sam Jopp", 23);
+        CustomerResponseWrapper wrapper = new CustomerResponseWrapper();
+        ArrayList<Customer> customers = customerService.retrieveAllCustomers();
+
+        Customer customer = new Customer();
+        customer.setFullName("Sam Jopp");
+        customers.add(customer);
+
+        wrapper.getCustomerResponse().setCustomers(customers);
+
         log.info("Leaving the getCustomer controller");
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+        return new ResponseEntity<>(wrapper, HttpStatus.OK);
     }
 }
