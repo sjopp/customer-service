@@ -18,7 +18,6 @@ public class Customer {
     @Column(name = "Full_Name", length = 64, nullable = false)
     private String fullName;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "Date_Of_Birth")
-    private Date dateOfBirth;
+    @Column(name = "Date_Of_Birth", length = 64, nullable = false)
+    private String dateOfBirth;
 }

@@ -40,6 +40,7 @@ public class CustomerFunctionalTest {
         then().
            statusCode(200).
         and().
-           body("customers[0].fullName", equalTo("Sam Jopp"));
+           body("customerResponse.customers[0].fullName", equalTo("Sam Jopp"),
+                   "customerResponse.customers[0].dateOfBirth", equalTo("1995/09/15"));
     }
 }
