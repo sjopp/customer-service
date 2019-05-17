@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @Slf4j
 @RestController
@@ -32,17 +31,15 @@ public class CustomerController {
         CustomerResponseWrapper wrapper = new CustomerResponseWrapper();
         ArrayList<Customer> customers = customerService.retrieveAllCustomers();
 
-        Customer customer = new Customer();
-        customer.setFullName("Sam Jopp");
-        customer.setDateOfBirth("1995/09/15");
-        customer.setId(1L);
-        customers.add(customer);
-
-        CustomerResponse customerResponse = new CustomerResponse();
-        customerResponse.setCustomers(customers);
-        wrapper.setCustomerResponse(customerResponse);
+        addCustomersToResponse(wrapper, customers);
 
         log.info("Leaving the getCustomer controller");
         return new ResponseEntity<>(wrapper, HttpStatus.OK);
+    }
+
+    private void addCustomersToResponse(CustomerResponseWrapper wrapper, ArrayList<Customer> customers) {
+        CustomerResponse customerResponse = new CustomerResponse();
+        customerResponse.setCustomers(customers);
+        wrapper.setResponse(customerResponse);
     }
 }

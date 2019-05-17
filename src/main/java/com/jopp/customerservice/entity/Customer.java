@@ -1,6 +1,7 @@
 package com.jopp.customerservice.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "customer")
+@NoArgsConstructor
 public class Customer {
 
     @Id
@@ -20,4 +22,9 @@ public class Customer {
 
     @Column(name = "Date_Of_Birth", length = 64, nullable = false)
     private String dateOfBirth;
+
+    public Customer(String fullName, String dateOfBirth) {
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+    }
 }

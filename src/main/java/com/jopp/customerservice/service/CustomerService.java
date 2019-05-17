@@ -27,7 +27,9 @@ public class CustomerService {
     }
 
     public ArrayList<Customer> retrieveAllCustomers() {
+        log.debug("Finding all customers");
         Iterable<Customer> customers = customerRepo.findAll();
+        log.debug("Customers: {}", customers.toString());
         Stream<Customer> stream = stream(customers.spliterator(), false);
         List<Customer> customerList = stream.collect(Collectors.toList());
         return new ArrayList<>(customerList);

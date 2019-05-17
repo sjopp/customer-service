@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class CustomerResponseWrapper {
 
-    private CustomerResponse customerResponse;
+    private CustomerResponse response;
     private Info info;
 }
