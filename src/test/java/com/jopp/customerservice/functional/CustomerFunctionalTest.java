@@ -1,6 +1,7 @@
 package com.jopp.customerservice.functional;
 
 import com.jayway.restassured.RestAssured;
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,4 +46,21 @@ public class CustomerFunctionalTest {
                    "response.customers[1].fullName", equalTo("Bill Will"),
                    "response.customers[1].dateOfBirth", equalTo("1956/07/11"));
     }
+
+    @Test
+    public void testWeGet201ResponseWhenAddingACustomer() {
+        given().
+           port(port).
+           body(readFileFromContents("/json/customer-request.json")).
+        when().
+           post("/customers").
+        then().
+           statusCode(201);
+    }
+
+    private String readFileFromContents(String fileName) {
+        return fileName;
+    }
+
+
 }

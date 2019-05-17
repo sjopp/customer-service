@@ -29,6 +29,7 @@ public class CustomerController {
 
         log.info("Entering the getCustomer controller");
         CustomerResponseWrapper wrapper = new CustomerResponseWrapper();
+
         ArrayList<Customer> customers = customerService.retrieveAllCustomers();
 
         addCustomersToResponse(wrapper, customers);

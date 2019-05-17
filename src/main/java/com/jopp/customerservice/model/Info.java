@@ -7,5 +7,4 @@ public class Info {
 
     private int status;
     private String message;
-
 }

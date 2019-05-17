@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface CustomerRepo extends CrudRepository<Customer, Long> {
+public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
     public List<Customer> findByFullName(String name);
 
