@@ -1,6 +1,7 @@
 package com.jopp.customerservice.service;
 
 import com.jopp.customerservice.entity.Customer;
+import com.jopp.customerservice.io.CustomerRequest;
 import com.jopp.customerservice.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,12 @@ public class CustomerService {
         Stream<Customer> stream = stream(customers.spliterator(), false);
         List<Customer> customerList = stream.collect(Collectors.toList());
         return new ArrayList<>(customerList);
+    }
+
+    public Long addCustomerToRepository(CustomerRequest request) {
+        log.debug("Saving customer to database");
+        customerRepository.save(request.getCustomer());
+
+        return request.getCustomer().getId();
     }
 }
