@@ -18,12 +18,12 @@ import java.util.ArrayList;
 
 @Slf4j
 @RestController
-public class CustomerController {
+public class FetchCustomersController {
 
     private final CustomerService customerService;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
+    public FetchCustomersController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
@@ -39,16 +39,6 @@ public class CustomerController {
 
         log.info("Leaving the getCustomer controller");
         return new ResponseEntity<>(wrapper, HttpStatus.OK);
-    }
-
-    @PostMapping("/customer/add")
-    public ResponseEntity<Long> addCustomer(@RequestBody CustomerRequest request) {
-
-        log.info("Entering the addCustomer controller");
-        Long id = customerService.addCustomerToRepository(request);
-
-        log.info("Leaving the addCustomer controller");
-        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     private void addCustomersToResponse(CustomerResponseWrapper wrapper, ArrayList<Customer> customers) {

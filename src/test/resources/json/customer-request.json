@@ -1,4 +1,6 @@
 {
-  "fullName": "Samuel Jopp",
-  "dateOfBirth": "1995/09/15"
+  "customer": {
+    "fullName": "Samuel Jopp",
+    "dateOfBirth": "1995/09/15"
+  }
 }
