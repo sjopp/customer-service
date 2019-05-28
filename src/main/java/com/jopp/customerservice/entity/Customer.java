@@ -22,8 +22,16 @@ public class Customer {
     @Column(name = "Date_Of_Birth", length = 64, nullable = false)
     private String dateOfBirth;
 
-    public Customer(String fullName, String dateOfBirth) {
+    @Column(name = "Username", length = 64, nullable = false)
+    private String username;
+
+    @Column(name = "Password", length = 64, nullable = false)
+    private String password;
+
+    public Customer(String fullName, String dateOfBirth, String username, String password) {
         this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;
+        this.username = username;
+        this.password = password;
     }
 }

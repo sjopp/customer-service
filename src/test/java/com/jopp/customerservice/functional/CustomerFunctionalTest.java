@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
@@ -28,6 +29,10 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class CustomerFunctionalTest {
 
+    private static final String getCustomerUrl = "/customer";
+    private static final String getCustomersUrl = "/customers";
+    private static final String addCustomerUrl = "/customer/add";
+
     @LocalServerPort
     private int port;
 
@@ -41,18 +46,36 @@ public class CustomerFunctionalTest {
     }
 
     @Test
-    public void testResponseOfController() {
+    public void testResponseOfGettingAllCustomersController() {
         given().
-           port(port).
+            header("Content-Type", "application/json").
         when().
            get("/customers").
         then().
            statusCode(200).
         and().
-           body("response.customers[0].fullName", equalTo("Tim Bob"),
-                   "response.customers[0].dateOfBirth", equalTo("1966/09/19"),
-                   "response.customers[1].fullName", equalTo("Bill Will"),
-                   "response.customers[1].dateOfBirth", equalTo("1956/07/11"));
+           body("data.customers[0].fullName", equalTo("Tim Bob"),
+                   "data.customers[0].dateOfBirth", equalTo("1966/09/19"),
+                   "data.customers[1].fullName", equalTo("Bill Will"),
+                   "data.customers[1].dateOfBirth", equalTo("1956/07/11"));
+    }
+
+    @Test
+    public void testResponseOfGettingACustomerController() {
+
+        String username = "sjopp";
+        String parametrisedUrl = String.format("%s/%s", getCustomerUrl, username);
+
+        given().
+           header("Content-Type", "application/json").
+        when().
+           get(parametrisedUrl).
+        then().
+           statusCode(200).
+        and().
+           body("data.customer.fullName", equalTo("Sam Jopp"),
+                   "data.customer.dateOfBirth", equalTo("1995/09/15"),
+                   "data.exists", equalTo(true));
     }
 
 //    @Ignore

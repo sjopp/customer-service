@@ -14,8 +14,9 @@ public class CustomerRepositoryConfig {
     @Bean
     CommandLineRunner initDatabase(CustomerRepository repository){
         return args -> {
-            log.info("Preloading " + repository.save(new Customer("Tim Bob", "1966/09/19")));
-            log.info("Preloading " + repository.save(new Customer("Bill Will", "1956/07/11")));
+            log.info("Preloading " + repository.save(new Customer("Tim Bob", "1966/09/19", "tbob", "password")));
+            log.info("Preloading " + repository.save(new Customer("Bill Will", "1956/07/11", "bWill", "password")));
+            log.info("Preloading " + repository.save(new Customer("Sam Jopp", "1995/09/15", "sjopp", "password")));
         };
     }
 }

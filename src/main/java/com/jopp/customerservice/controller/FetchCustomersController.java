@@ -1,18 +1,16 @@
 package com.jopp.customerservice.controller;
 
 import com.jopp.customerservice.entity.Customer;
-import com.jopp.customerservice.io.CustomerRequest;
-import com.jopp.customerservice.io.CustomerResponse;
-import com.jopp.customerservice.io.CustomerResponseWrapper;
+import com.jopp.customerservice.io.response.CustomerListResponse;
+import com.jopp.customerservice.io.response.CustomerListResponseWrapper;
+import com.jopp.customerservice.io.response.CustomerResponse;
+import com.jopp.customerservice.io.response.CustomerResponseWrapper;
 import com.jopp.customerservice.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -28,22 +26,46 @@ public class FetchCustomersController {
     }
 
     @GetMapping("/customers")
-    public ResponseEntity<CustomerResponseWrapper> getCustomers() {
+    public ResponseEntity<CustomerListResponseWrapper> getCustomers() {
 
-        log.info("Entering the getCustomer controller");
-        CustomerResponseWrapper wrapper = new CustomerResponseWrapper();
+        log.info("Entering the getCustomers controller");
+        CustomerListResponseWrapper wrapper = new CustomerListResponseWrapper();
 
         ArrayList<Customer> customers = customerService.retrieveAllCustomers();
 
         addCustomersToResponse(wrapper, customers);
 
+        log.info("Leaving the getCustomers controller");
+        return new ResponseEntity<>(wrapper, HttpStatus.OK);
+    }
+
+    @GetMapping("/customer/{username}")
+    public ResponseEntity<CustomerResponseWrapper> getCustomer(
+            @PathVariable("username") String username
+    ) {
+
+        log.info("Entering the getCustomer controller");
+        log.debug("Getting customer " + username);
+
+        Customer customer = customerService.findCustomer(username);
+
+        CustomerResponseWrapper wrapper = new CustomerResponseWrapper();
+        addCustomerToResponse(wrapper, customer);
+
         log.info("Leaving the getCustomer controller");
         return new ResponseEntity<>(wrapper, HttpStatus.OK);
     }
 
-    private void addCustomersToResponse(CustomerResponseWrapper wrapper, ArrayList<Customer> customers) {
+    private void addCustomersToResponse(CustomerListResponseWrapper wrapper, ArrayList<Customer> customers) {
+        CustomerListResponse customerListResponse = new CustomerListResponse();
+        customerListResponse.setCustomers(customers);
+        wrapper.setData(customerListResponse);
+    }
+
+    private void addCustomerToResponse(CustomerResponseWrapper wrapper, Customer customer) {
         CustomerResponse customerResponse = new CustomerResponse();
-        customerResponse.setCustomers(customers);
-        wrapper.setResponse(customerResponse);
+        customerResponse.setCustomer(customer);
+        customerResponse.setExists(true);
+        wrapper.setData(customerResponse);
     }
 }

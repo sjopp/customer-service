@@ -1,6 +1,6 @@
 package com.jopp.customerservice.controller;
 
-import com.jopp.customerservice.io.CustomerRequest;
+import com.jopp.customerservice.io.request.CustomerRequest;
 import com.jopp.customerservice.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

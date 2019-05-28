@@ -1,4 +1,4 @@
-package com.jopp.customerservice.io;
+package com.jopp.customerservice.io.response;
 
 import com.jopp.customerservice.entity.Customer;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.ArrayList;
 
 @Data
-public class CustomerResponse {
+public class CustomerListResponse {
 
     private ArrayList<Customer> customers;
 }
