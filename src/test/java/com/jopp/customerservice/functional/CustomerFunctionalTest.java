@@ -46,18 +46,37 @@ public class CustomerFunctionalTest {
     }
 
     @Test
-    public void testResponseOfGettingAllCustomersController() {
+    public void testWeGetAllCustomers() {
         given().
             header("Content-Type", "application/json").
         when().
-           get("/customers").
+           get(getCustomersUrl).
         then().
            statusCode(200).
         and().
            body("data.customers[0].fullName", equalTo("Tim Bob"),
                    "data.customers[0].dateOfBirth", equalTo("1966/09/19"),
                    "data.customers[1].fullName", equalTo("Bill Will"),
-                   "data.customers[1].dateOfBirth", equalTo("1956/07/11"));
+                   "data.customers[1].dateOfBirth", equalTo("1956/07/11"),
+                   "data.customers[2].fullName", equalTo("Sam Jopp"),
+                   "data.customers[2].dateOfBirth", equalTo("1995/09/15"));
+    }
+
+    @Test
+    public void testWeGet404WhenCustomerDoesNotExist() {
+
+        String username = "not-here";
+        String parameterisedUrl = String.format("%s/%s", getCustomerUrl, username);
+
+        given().
+            header("Content-Type", "application/json").
+        when().
+           get(parameterisedUrl).
+        then().
+           statusCode(404).
+        and().
+           body("info.status", equalTo(404),
+                   "info.message", equalTo("Customer : " + username + " has not been found"));
     }
 
     @Test
@@ -75,19 +94,19 @@ public class CustomerFunctionalTest {
         and().
            body("data.customer.fullName", equalTo("Sam Jopp"),
                    "data.customer.dateOfBirth", equalTo("1995/09/15"),
+                   "data.customer.username", equalTo(username),
+                   "data.customer.password", equalTo("password"),
                    "data.exists", equalTo(true));
     }
 
-//    @Ignore
     @Test
     public void testWeGet201ResponseWhenAddingACustomer() {
         given().
-           port(port).
            body(readFileFromContents("customer-request.json")).
            header("Accept", "application/json;charset=UTF-8").
            header("Content-Type", "application/json;charset=UTF-8").
         when().
-           post("/customer/add").
+           post(addCustomerUrl).
         then().
            statusCode(201);
     }

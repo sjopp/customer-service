@@ -1,6 +1,7 @@
 package com.jopp.customerservice.controller;
 
 import com.jopp.customerservice.entity.Customer;
+import com.jopp.customerservice.exception.CustomerNotFoundException;
 import com.jopp.customerservice.io.response.CustomerListResponse;
 import com.jopp.customerservice.io.response.CustomerListResponseWrapper;
 import com.jopp.customerservice.io.response.CustomerResponse;
@@ -41,8 +42,7 @@ public class FetchCustomersController {
 
     @GetMapping("/customer/{username}")
     public ResponseEntity<CustomerResponseWrapper> getCustomer(
-            @PathVariable("username") String username
-    ) {
+            @PathVariable("username") String username) throws CustomerNotFoundException {
 
         log.info("Entering the getCustomer controller");
         log.debug("Getting customer " + username);

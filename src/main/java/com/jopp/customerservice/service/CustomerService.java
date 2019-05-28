@@ -1,10 +1,12 @@
 package com.jopp.customerservice.service;
 
 import com.jopp.customerservice.entity.Customer;
+import com.jopp.customerservice.exception.CustomerNotFoundException;
 import com.jopp.customerservice.io.request.CustomerRequest;
 import com.jopp.customerservice.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.StreamSupport.stream;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Slf4j
 @Service
@@ -34,14 +37,14 @@ public class CustomerService {
         return new ArrayList<>(customerList);
     }
 
-    public Customer findCustomer(String username) {
+    public Customer findCustomer(String username) throws CustomerNotFoundException {
         log.debug("Finding customer username: {}", username);
-        try {
-            return customerRepository.findByUsername(username);
-        } catch (Exception e) {
-//            throw new CustomerNotFoundException();
+        Customer customer = customerRepository.findByUsername(username);
+        if (customer != null) {
+            return customer;
+        } else {
+            throw new CustomerNotFoundException("Customer : " + username + " has not been found");
         }
-        return null;
     }
 
     public Long addCustomerToRepository(CustomerRequest request) {
