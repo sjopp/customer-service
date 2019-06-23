@@ -25,9 +25,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 
 @ActiveProfiles("test")
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-public class CustomerFunctionalTest {
+public class CustomerFunctionalTest extends FunctionalTest {
 
     private static final String getCustomerUrl = "/customer";
     private static final String getCustomersUrl = "/customers";
@@ -111,15 +109,4 @@ public class CustomerFunctionalTest {
            statusCode(201);
     }
 
-    private String readFileFromContents(String fileName) {
-        InputStream resource = null;
-        String fixtureContents = "";
-        try {
-            resource = new ClassPathResource(String.format("json/%s", fileName)).getInputStream();
-            fixtureContents = IOUtils.toString(resource, Charset.defaultCharset());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return fixtureContents;
-    }
 }
